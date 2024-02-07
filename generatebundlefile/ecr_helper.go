@@ -12,6 +12,7 @@ import (
 	"github.com/go-logr/logr"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
+	"sigs.k8s.io/yaml"
 
 	api "github.com/aws/eks-anywhere-packages/api/v1alpha1"
 )
@@ -194,6 +195,10 @@ func getLatestImageSha(details []ImageDetailsBothECR) (*api.SourceVersion, error
 			latest = detail
 		}
 	}
+	// out1, _ := yaml.Marshal(details)
+	// fmt.Println(string(out1))
+	out2, _ := yaml.Marshal(latest)
+	fmt.Println(string(out2))
 	// Check if latest is equal to empty struct, and return error if that's the case.
 	if reflect.DeepEqual(latest, ecrpublictypes.ImageDetail{}) {
 		return nil, fmt.Errorf("error no images found")
